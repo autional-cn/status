@@ -1,0 +1,531 @@
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import {
+	subscribeEmail,
+	unsubscribeEmail,
+	fetchSubscriptionPreferences,
+	updateSubscriptionPreferences,
+} from '@/lib/api';
+import type { SubscribeResult, SubscriptionPreferences } from '@/lib/api';
+import {
+	Bell,
+	CheckCircle,
+	Mail,
+	Loader2,
+	AlertCircle,
+	Rss,
+	XCircle,
+	Settings,
+} from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Toggle } from '@autional-cn/ui';
+
+const emailSchema = z.object({
+	email: z.string().email(),
+});
+type EmailForm = z.infer<typeof emailSchema>;
+
+const tokenSchema = z.object({
+	token: z.string().min(1),
+});
+type TokenForm = z.infer<typeof tokenSchema>;
+
+const prefEmailSchema = z.object({
+	prefEmail: z.string().email(),
+});
+type PrefEmailForm = z.infer<typeof prefEmailSchema>;
+
+type SubscribeMode = 'subscribe' | 'unsubscribe' | 'preferences';
+
+const DIGEST_OPTIONS = [
+	{ value: 'immediate', label: 'subscribe.preferences.digestImmediate' },
+	{ value: 'daily', label: 'subscribe.preferences.digestDaily' },
+	{ value: 'weekly', label: 'subscribe.preferences.digestWeekly' },
+];
+
+export default function SubscribePage() {
+	const { t } = useTranslation();
+	const [loading, setLoading] = useState(false);
+	const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
+	const [mode, setMode] = useState<SubscribeMode>('subscribe');
+
+	const emailForm = useForm<EmailForm>({
+		resolver: zodResolver(emailSchema),
+		defaultValues: { email: '' },
+	});
+	const tokenForm = useForm<TokenForm>({
+		resolver: zodResolver(tokenSchema),
+		defaultValues: { token: '' },
+	});
+
+	const prefForm = useForm<PrefEmailForm>({
+		resolver: zodResolver(prefEmailSchema),
+		defaultValues: { prefEmail: '' },
+	});
+
+	// Preferences state
+	const [prefsLoading, setPrefsLoading] = useState(false);
+	const [prefsLoaded, setPrefsLoaded] = useState(false);
+	const [prefs, setPrefs] = useState<SubscriptionPreferences | null>(null);
+
+	const handleSubscribe = async (data: EmailForm) => {
+		if (loading) return;
+
+		setLoading(true);
+		setResult(null);
+		try {
+			const res = await subscribeEmail(data.email);
+			setResult({
+				success: res.success,
+				message: res.message ?? t(res.code || 'subscribe.subscribeError'),
+			});
+			if (res.success) emailForm.reset();
+		} catch {
+			setResult({ success: false, message: t('subscribe.subscribeError') });
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleUnsubscribe = async (data: TokenForm) => {
+		if (loading) return;
+
+		setLoading(true);
+		setResult(null);
+		try {
+			const res = await unsubscribeEmail(data.token);
+			setResult({
+				success: res.success,
+				message: res.message ?? t(res.code || 'subscribe.unsubscribeError'),
+			});
+			if (res.success) tokenForm.reset();
+		} catch {
+			setResult({ success: false, message: t('subscribe.unsubscribeError') });
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleLoadPreferences = async () => {
+		const email = prefForm.getValues('prefEmail');
+		if (!email.trim() || prefsLoading) return;
+
+		setPrefsLoading(true);
+		setPrefsLoaded(false);
+		try {
+			const data = await fetchSubscriptionPreferences(email);
+			if (data) {
+				setPrefs(data);
+				setPrefsLoaded(true);
+			} else {
+				setResult({ success: false, message: t('subscribe.preferences.saveError') });
+			}
+		} catch {
+			setResult({ success: false, message: t('subscribe.preferences.saveError') });
+		} finally {
+			setPrefsLoading(false);
+		}
+	};
+
+	const handleSavePreferences = async () => {
+		const email = prefForm.getValues('prefEmail');
+		if (!email.trim() || prefsLoading || !prefs) return;
+
+		setPrefsLoading(true);
+		try {
+			const updated = await updateSubscriptionPreferences(email, {
+				notifyIncidents: prefs.notifyIncidents,
+				notifyMaintenance: prefs.notifyMaintenance,
+				notifyRecovery: prefs.notifyRecovery,
+				digestFrequency: prefs.digestFrequency,
+				categories: prefs.categories,
+			});
+			if (updated) {
+				setPrefs(updated);
+				setResult({ success: true, message: t('subscribe.preferences.saveSuccess') });
+			} else {
+				setResult({ success: false, message: t('subscribe.preferences.saveError') });
+			}
+		} catch {
+			setResult({ success: false, message: t('subscribe.preferences.saveError') });
+		} finally {
+			setPrefsLoading(false);
+		}
+	};
+
+	const handleTogglePref = (key: 'notifyIncidents' | 'notifyMaintenance' | 'notifyRecovery') => {
+		if (!prefs) return;
+		setPrefs({ ...prefs, [key]: !prefs[key] });
+	};
+
+	const handleDigestChange = (val: string) => {
+		if (!prefs) return;
+		setPrefs({ ...prefs, digestFrequency: val });
+	};
+
+	return (
+		<div className="mx-auto max-w-2xl px-4 py-12">
+			<div className="text-center">
+				<div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary-50 dark:bg-primary-900/30">
+					<Bell size={24} className="text-primary-600 dark:text-primary-400" />
+				</div>
+				<h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+					{t('subscribe.title')}
+				</h1>
+				<p className="mx-auto mt-2 max-w-md text-sm text-neutral-500 dark:text-neutral-300">
+					{t('subscribe.desc')}
+				</p>
+			</div>
+
+			{/* Mode Toggle */}
+			<div className="mt-8 flex justify-center">
+				<div className="inline-flex rounded-lg border border-neutral-200 bg-white p-1 dark:border-neutral-700 dark:bg-neutral-800">
+					<button
+						onClick={() => {
+							setMode('subscribe');
+							setResult(null);
+						}}
+						className={`rounded-md px-4 py-1.5 text-sm font-medium transition-colors ${
+							mode === 'subscribe'
+								? 'bg-primary-600 text-white'
+								: 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200'
+						}`}
+					>
+						{t('subscribe.subscribeTab')}
+					</button>
+					<button
+						onClick={() => {
+							setMode('unsubscribe');
+							setResult(null);
+						}}
+						className={`rounded-md px-4 py-1.5 text-sm font-medium transition-colors ${
+							mode === 'unsubscribe'
+								? 'bg-primary-600 text-white'
+								: 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200'
+						}`}
+					>
+						{t('subscribe.unsubscribeTab')}
+					</button>
+					<button
+						onClick={() => {
+							setMode('preferences');
+							setResult(null);
+						}}
+						className={`rounded-md px-4 py-1.5 text-sm font-medium transition-colors ${
+							mode === 'preferences'
+								? 'bg-primary-600 text-white'
+								: 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200'
+						}`}
+					>
+						{t('subscribe.preferencesTab')}
+					</button>
+				</div>
+			</div>
+
+			<div className="mt-6 rounded-lg border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-700 dark:bg-neutral-800">
+				{mode === 'subscribe' ? (
+					<form onSubmit={emailForm.handleSubmit(handleSubscribe)} className="space-y-4">
+						<div>
+							<label
+								htmlFor="email"
+								className="mb-1.5 block text-sm font-medium text-neutral-700 dark:text-neutral-200"
+							>
+								{t('subscribe.emailLabel')}
+							</label>
+							<div className="relative">
+								<Mail
+									size={16}
+									className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"
+								/>
+								<input
+									id="email"
+									type="email"
+									{...emailForm.register('email')}
+									placeholder="your@email.com"
+									className="w-full rounded-md border border-neutral-300 bg-white py-2.5 pl-9 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder:text-neutral-500"
+								/>
+							</div>
+							{emailForm.formState.errors.email && (
+								<p className="mt-1 text-xs text-rose-500">{t('subscribe.invalidEmail')}</p>
+							)}
+						</div>
+
+						<button
+							type="submit"
+							disabled={loading}
+							className="flex w-full items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-700 disabled:opacity-60 disabled:cursor-not-allowed"
+						>
+							{loading ? (
+								<>
+									<Loader2 size={16} className="animate-spin" />
+									{t('subscribe.processing')}
+								</>
+							) : (
+								<>
+									<Bell size={16} />
+									{t('subscribe.submit')}
+								</>
+							)}
+						</button>
+					</form>
+				) : mode === 'unsubscribe' ? (
+					<form onSubmit={tokenForm.handleSubmit(handleUnsubscribe)} className="space-y-4">
+						<div>
+							<label
+								htmlFor="token"
+								className="mb-1.5 block text-sm font-medium text-neutral-700 dark:text-neutral-200"
+							>
+								{t('subscribe.tokenLabel')}
+							</label>
+							<div className="relative">
+								<XCircle
+									size={16}
+									className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"
+								/>
+								<input
+									id="token"
+									type="text"
+									{...tokenForm.register('token')}
+									placeholder={t('subscribe.tokenPlaceholder')}
+									className="w-full rounded-md border border-neutral-300 bg-white py-2.5 pl-9 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder:text-neutral-500"
+								/>
+							</div>
+							{tokenForm.formState.errors.token && (
+								<p className="mt-1 text-xs text-rose-500">{t('subscribe.tokenRequired')}</p>
+							)}
+							<p className="mt-1.5 text-xs text-neutral-500 dark:text-neutral-400">
+								{t('subscribe.tokenHint')}
+							</p>
+						</div>
+
+						<button
+							type="submit"
+							disabled={loading}
+							className="flex w-full items-center justify-center gap-2 rounded-md bg-neutral-700 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-neutral-800 disabled:opacity-60 disabled:cursor-not-allowed dark:bg-neutral-600 dark:hover:bg-neutral-500"
+						>
+							{loading ? (
+								<>
+									<Loader2 size={16} className="animate-spin" />
+									{t('subscribe.processing')}
+								</>
+							) : (
+								<>
+									<XCircle size={16} />
+									{t('subscribe.unsubscribeBtn')}
+								</>
+							)}
+						</button>
+					</form>
+				) : (
+					/* ─── Preferences Form ─── */
+					<div className="space-y-4">
+						<h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+							{t('subscribe.preferences.title')}
+						</h3>
+						<p className="text-xs text-neutral-500 dark:text-neutral-400">
+							{t('subscribe.preferences.desc')}
+						</p>
+
+						{/* Email */}
+						<div>
+							<label
+								htmlFor="pref-email"
+								className="mb-1.5 block text-sm font-medium text-neutral-700 dark:text-neutral-200"
+							>
+								{t('subscribe.emailLabel')}
+							</label>
+							<div className="flex gap-2">
+								<div className="relative flex-1">
+									<Mail
+										size={16}
+										className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"
+									/>
+									<input
+										id="pref-email"
+										type="email"
+										{...prefForm.register('prefEmail')}
+										onChange={(e) => {
+											prefForm.register('prefEmail').onChange(e);
+											setPrefsLoaded(false);
+										}}
+										placeholder="your@email.com"
+										className="w-full rounded-md border border-neutral-300 bg-white py-2.5 pl-9 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder:text-neutral-500"
+									/>
+								</div>
+								<button
+									type="button"
+									onClick={prefForm.handleSubmit(() => handleLoadPreferences())}
+									disabled={prefsLoading || !prefForm.getValues('prefEmail').trim()}
+									className="flex items-center gap-1.5 rounded-md bg-neutral-100 px-4 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-200 transition-colors disabled:opacity-50 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600"
+								>
+									{prefsLoading ? (
+										<Loader2 size={14} className="animate-spin" />
+									) : (
+										<Settings size={14} />
+									)}
+									{t('subscribe.preferences.load')}
+								</button>
+							</div>
+						</div>
+
+						{/* Not verified warning */}
+						{prefsLoaded && prefs && !prefs.verified && (
+							<div className="flex items-center gap-2 rounded-md bg-amber-50 p-3 text-sm text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+								<AlertCircle size={16} />
+								{t('subscribe.preferences.notVerified')}
+							</div>
+						)}
+
+						{/* Preferences toggles */}
+						{prefsLoaded && prefs && (
+							<div className="space-y-3 rounded-md border border-neutral-100 bg-neutral-50 p-4 dark:border-neutral-700 dark:bg-neutral-800/50">
+								{/* Notify Incidents */}
+								<label className="flex items-center justify-between cursor-pointer">
+									<div>
+										<span className="text-sm font-medium text-neutral-800 dark:text-neutral-200">
+											{t('subscribe.preferences.notifyIncidents')}
+										</span>
+										<p className="text-xs text-neutral-500 dark:text-neutral-400">
+											{t('subscribe.preferences.notifyIncidentsDesc')}
+										</p>
+									</div>
+									<Toggle
+										checked={prefs.notifyIncidents}
+										onChange={() => handleTogglePref('notifyIncidents')}
+										size="sm"
+									/>
+								</label>
+
+								{/* Notify Maintenance */}
+								<label className="flex items-center justify-between cursor-pointer">
+									<div>
+										<span className="text-sm font-medium text-neutral-800 dark:text-neutral-200">
+											{t('subscribe.preferences.notifyMaintenance')}
+										</span>
+										<p className="text-xs text-neutral-500 dark:text-neutral-400">
+											{t('subscribe.preferences.notifyMaintenanceDesc')}
+										</p>
+									</div>
+									<Toggle
+										checked={prefs.notifyMaintenance}
+										onChange={() => handleTogglePref('notifyMaintenance')}
+										size="sm"
+									/>
+								</label>
+
+								{/* Notify Recovery */}
+								<label className="flex items-center justify-between cursor-pointer">
+									<div>
+										<span className="text-sm font-medium text-neutral-800 dark:text-neutral-200">
+											{t('subscribe.preferences.notifyRecovery')}
+										</span>
+										<p className="text-xs text-neutral-500 dark:text-neutral-400">
+											{t('subscribe.preferences.notifyRecoveryDesc')}
+										</p>
+									</div>
+									<Toggle
+										checked={prefs.notifyRecovery}
+										onChange={() => handleTogglePref('notifyRecovery')}
+										size="sm"
+									/>
+								</label>
+
+								{/* Digest Frequency */}
+								<div className="pt-2 border-t border-neutral-200 dark:border-neutral-700">
+									<label className="mb-2 block text-sm font-medium text-neutral-800 dark:text-neutral-200">
+										{t('subscribe.preferences.digestFrequency')}
+									</label>
+									<select
+										value={prefs.digestFrequency}
+										onChange={(e) => handleDigestChange(e.target.value)}
+										className="w-full rounded-md border border-neutral-300 bg-white py-2 px-3 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-100"
+									>
+										{DIGEST_OPTIONS.map((opt) => (
+											<option key={opt.value} value={opt.value}>
+												{t(opt.label)}
+											</option>
+										))}
+									</select>
+								</div>
+							</div>
+						)}
+
+						{/* Save button */}
+						{prefsLoaded && prefs && (
+							<button
+								type="button"
+								onClick={handleSavePreferences}
+								disabled={prefsLoading}
+								className="flex w-full items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-700 disabled:opacity-60 disabled:cursor-not-allowed"
+							>
+								{prefsLoading && prefsLoaded ? (
+									<>
+										<Loader2 size={16} className="animate-spin" />
+										{t('subscribe.processing')}
+									</>
+								) : (
+									<>
+										<Settings size={16} />
+										{t('subscribe.preferences.save')}
+									</>
+								)}
+							</button>
+						)}
+					</div>
+				)}
+
+				{result && (
+					<div
+						className={`mt-4 flex items-center gap-2 rounded-md p-3 text-sm ${
+							result.success
+								? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+								: 'bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400'
+						}`}
+					>
+						{result.success ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
+						{result.message}
+					</div>
+				)}
+			</div>
+
+			{/* Subscription Benefits */}
+			<div className="mt-8 grid gap-4 sm:grid-cols-3">
+				<div className="rounded-lg border border-neutral-200 bg-white p-4 text-center dark:border-neutral-700 dark:bg-neutral-800">
+					<div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">
+						<Rss size={18} />
+					</div>
+					<h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+						{t('subscribe.benefit.realtime')}
+					</h3>
+					<p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+						{t('subscribe.benefit.realtimeDesc')}
+					</p>
+				</div>
+				<div className="rounded-lg border border-neutral-200 bg-white p-4 text-center dark:border-neutral-700 dark:bg-neutral-800">
+					<div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+						<CheckCircle size={18} />
+					</div>
+					<h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+						{t('subscribe.benefit.resolve')}
+					</h3>
+					<p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+						{t('subscribe.benefit.resolveDesc')}
+					</p>
+				</div>
+				<div className="rounded-lg border border-neutral-200 bg-white p-4 text-center dark:border-neutral-700 dark:bg-neutral-800">
+					<div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400">
+						<Bell size={18} />
+					</div>
+					<h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+						{t('subscribe.benefit.advance')}
+					</h3>
+					<p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+						{t('subscribe.benefit.advanceDesc')}
+					</p>
+				</div>
+			</div>
+		</div>
+	);
+}
