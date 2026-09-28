@@ -52,7 +52,7 @@ export default function Footer() {
 
 					<div className="flex items-center gap-3 text-neutral-400 dark:text-neutral-500">
 						<a
-							href="mailto:tianv@tianv.com"
+							href="mailto:support@autional.net"
 							className="hover:text-neutral-600 transition-colors dark:hover:text-neutral-300"
 							title={t('footer.contact')}
 						>
