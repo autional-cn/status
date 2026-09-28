@@ -60,13 +60,17 @@ export default function StatusHeader({ overallStatus = 'healthy' }: StatusHeader
 			</div>
 
 			{/* Navigation */}
-			<nav className="border-b border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
-				<div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+			<nav className="sticky top-0 z-10 h-[var(--layout-header-height)] border-b border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)]">
+				<div className="mx-auto flex h-full max-w-6xl items-center justify-between px-4">
 					<Link
 						to="/"
 						className="flex items-center gap-2 text-lg font-bold text-neutral-900 dark:text-neutral-100"
 					>
-						<Activity size={22} className="text-primary-600 dark:text-primary-400" />
+						{/* 这里此前是 <Activity size={22} /> —— 那是 lucide 的**状态**图标，
+						    被当成了**品牌标**用。状态图标表达「系统现在怎么样」，品牌标表达
+						    「这是哪家的产品」，两者不能互换：换个状态语义这条链接就变了意思。
+						    顶部横幅里的 Activity 是正确用法，保留。 */}
+						<img src="/favicon.svg" alt="" width={28} height={28} className="h-7 w-7" />
 						Autional Status
 					</Link>
 
