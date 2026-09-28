@@ -36,7 +36,11 @@ export default function StatusHeader({ overallStatus = 'healthy' }: StatusHeader
 		},
 	};
 
-	const config = bannerConfig[overallStatus];
+	// 词表漂移防线：props 类型拦不住运行时的网络数据，落表外的取值按 unhealthy 渲染而非崩溃
+	const status: keyof typeof bannerConfig =
+		overallStatus in bannerConfig ? overallStatus : 'unhealthy';
+
+	const config = bannerConfig[status];
 
 	const navItems = [
 		{ to: '/', key: 'nav.status' as const },
@@ -51,7 +55,7 @@ export default function StatusHeader({ overallStatus = 'healthy' }: StatusHeader
 			<div className={`${config.bg} text-white`}>
 				<div className="mx-auto flex max-w-6xl items-center justify-center gap-3 px-4 py-4">
 					{config.icon}
-					<span className="text-lg font-semibold">{bannerText[overallStatus]}</span>
+					<span className="text-lg font-semibold">{bannerText[status]}</span>
 				</div>
 			</div>
 

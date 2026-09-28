@@ -120,11 +120,35 @@ export function buildGroupStructure(catalog: ServiceCatalogResponse | null): Ser
 }
 
 export interface OverviewData {
-	overallStatus: HealthStatus;
+	/** 后端词表（operational/degraded/unavailable），非 HealthStatus —— 消费前必须过 normalizeOverallStatus */
+	overallStatus: string;
 	servicesTotal: number;
 	servicesHealthy: number;
 	activeIncidents: number;
 	lastUpdated: string;
+}
+
+/**
+ * overall status 归一化 —— 两个数据源词表不同：
+ *   - gateway /ready:      healthy / degraded / unhealthy
+ *   - status-service:      operational / degraded / unavailable
+ * 未知取值按 unhealthy 处理（状态页宁可误报也不误报全绿），且任何词表漂移都不得再让整站白屏。
+ */
+const OVERALL_STATUS_MAP: Record<string, HealthStatus> = {
+	healthy: 'healthy',
+	operational: 'healthy',
+	degraded: 'degraded',
+	unhealthy: 'unhealthy',
+	unavailable: 'unhealthy',
+};
+
+export function normalizeOverallStatus(raw?: string | null): HealthStatus | null {
+	if (!raw) return null;
+	const mapped = OVERALL_STATUS_MAP[raw];
+	if (!mapped) {
+		devWarn(`[StatusPage] unknown overall status "${raw}" — rendering as unhealthy`);
+	}
+	return mapped ?? 'unhealthy';
 }
 
 // ═══════════════════════════════════════════════════════════════
