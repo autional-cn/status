@@ -22,9 +22,9 @@ interface UptimeChartProps {
 }
 
 const statusColors: Record<string, string> = {
-	healthy: '#10b981',
-	degraded: '#f59e0b',
-	unhealthy: '#f43f5e',
+	healthy: 'var(--color-success)',
+	degraded: 'var(--color-warning)',
+	unhealthy: 'var(--color-danger)',
 };
 
 const lightColors = { grid: '#e5e5e5', tick: '#737373', tooltipBorder: '#e5e5e5' };

@@ -59,22 +59,22 @@ export default function LatencyChart({ data }: LatencyChartProps) {
 				/>
 				<ReferenceLine
 					y={threshold}
-					stroke="#f59e0b"
+					stroke="var(--color-warning)"
 					strokeDasharray="4 4"
 					label={{
 						value: t('service.latencyThreshold'),
 						position: 'right',
 						fontSize: 10,
-						fill: '#f59e0b',
+						fill: 'var(--color-warning)',
 					}}
 				/>
 				<Line
 					type="monotone"
 					dataKey="latency"
-					stroke="#6366f1"
+					stroke="var(--color-chart-1)"
 					strokeWidth={2}
 					dot={false}
-					activeDot={{ r: 4, fill: '#6366f1' }}
+					activeDot={{ r: 4, fill: 'var(--color-chart-1)' }}
 				/>
 			</LineChart>
 		</ResponsiveContainer>
