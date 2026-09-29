@@ -21,14 +21,21 @@ interface LatencyChartProps {
 	data: LatencyData[];
 }
 
-const lightColors = { grid: '#e5e5e5', tick: '#737373', tooltipBorder: '#e5e5e5' };
-const darkColors = { grid: '#404040', tick: '#a3a3a3', tooltipBorder: '#404040' };
+// 图表网格与坐标轴此前用**两套写死的灰**：浅色 #e5e5e5 / #737373，深色 #404040 / #a3a3a3。
+// 它们既不在设计系统里（所以颜色闸门抓不到——那些是非设计系统色值，不在它的比对表里），
+// 又逼着组件在 JS 里判断主题。改用中性令牌后由 CSS 自己解析（.dark 会反转中性色阶）：
+//   · 少一套脱离设计系统的色值
+//   · 少一处 JS 里的主题分支
+const chartColors = {
+	grid: 'var(--color-neutral-300)',
+	tick: 'var(--color-neutral-500)',
+	tooltipBorder: 'var(--color-border-subtle)',
+};
 
 export default function LatencyChart({ data }: LatencyChartProps) {
 	const { t } = useTranslation();
 	const { theme } = useTheme();
-	const isDark = theme === 'dark';
-	const c = isDark ? darkColors : lightColors;
+	const c = chartColors;
 	const maxLatency = Math.max(...data.map((d) => d.latency), 100);
 	const threshold = maxLatency > 500 ? 500 : 200;
 
