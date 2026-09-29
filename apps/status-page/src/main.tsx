@@ -6,6 +6,7 @@ import { ROUTER_BASENAME } from '@autional-cn/shared';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from '@autional-cn/ui';
 import App from './App';
+import './non-tenant-segments';
 import './index.css';
 
 const queryClient = new QueryClient({
