@@ -20,7 +20,7 @@ export function generateRSS(incidents: Incident[], maintenances: Maintenance[]):
 	const baseUrl =
 		typeof window !== 'undefined'
 			? window.location.origin
-			: 'https://status/api/v1/status.authms.local';
+			: 'https://status/api/v1/status.autional.local';
 
 	const incidentItems = incidents
 		.map((incident) => {
