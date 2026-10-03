@@ -23,6 +23,7 @@ export default function App() {
 					<Route path="/incidents" element={<IncidentsPage />} />
 					<Route path="/incidents/:id" element={<IncidentDetailPage />} />
 					<Route path="/subscribe" element={<SubscribePage />} />
+					<Route path="/subscribe/manage" element={<SubscribePage />} />
 					<Route path="/subscribe/verify" element={<VerifySubscriptionPage />} />
 					<Route path="/services/:serviceId" element={<ServiceDetailPage />} />
 					<Route path="/maintenance" element={<MaintenancePage />} />

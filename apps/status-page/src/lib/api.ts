@@ -313,33 +313,55 @@ export interface SubscriptionPreferences {
 	updatedAt: string;
 }
 
+/** 偏好读写结果——invalidToken 与一般错误分开，页面据此给不同文案（不是"保存失败"而是"链接失效"） */
+export type SubscriptionPreferencesResult =
+	| { kind: 'ok'; prefs: SubscriptionPreferences }
+	| { kind: 'invalidToken' }
+	| { kind: 'error' };
+
+/** token 无效/缺失 → HTTP 400（error.status.invalid_token = 61190005 → 400） */
+function isInvalidTokenError(err: unknown): boolean {
+	return (err as { response?: { status?: number } })?.response?.status === 400;
+}
+
+// U349：偏好读写以订阅管理令牌为键（后端已由 email 改为 token，邮箱枚举面收口）。
+// 生成的 SDK（shared rc.16）仍是 email 形状，按既有 @generated-api-exempt 惯例直连
+// apiClient；待 shared 下次再生成后换回 Generated.*。
 export async function fetchSubscriptionPreferences(
-	email: string,
-): Promise<SubscriptionPreferences | null> {
+	token: string,
+): Promise<SubscriptionPreferencesResult> {
 	try {
-		return (await Generated.statusSubscriptionsPreferences({ email })) as SubscriptionPreferences;
+		const { apiClient } = await import('@autional-cn/shared');
+		// @generated-api-exempt: token-keyed preferences (generated shape is email-based)
+		const res = await apiClient.get('/status/api/v1/status/subscriptions/preferences', {
+			params: { token },
+		});
+		return { kind: 'ok', prefs: res.data as SubscriptionPreferences };
 	} catch (err) {
 		devWarn('[StatusPage] subscription preferences fetch failed:', err);
-		return null;
+		return { kind: isInvalidTokenError(err) ? 'invalidToken' : 'error' };
 	}
 }
 
 export async function updateSubscriptionPreferences(
-	email: string,
+	token: string,
 	prefs: Partial<
 		Pick<
 			SubscriptionPreferences,
 			'notifyIncidents' | 'notifyMaintenance' | 'notifyRecovery' | 'digestFrequency' | 'categories'
 		>
 	>,
-): Promise<SubscriptionPreferences | null> {
+): Promise<SubscriptionPreferencesResult> {
 	try {
-		return (await Generated.statusSubscriptionsPreferencesPut({
-			email,
+		const { apiClient } = await import('@autional-cn/shared');
+		// @generated-api-exempt: token-keyed preferences (generated shape is email-based)
+		const res = await apiClient.put('/status/api/v1/status/subscriptions/preferences', {
+			token,
 			...prefs,
-		} as any)) as SubscriptionPreferences;
+		});
+		return { kind: 'ok', prefs: res.data as SubscriptionPreferences };
 	} catch (err) {
 		devWarn('[StatusPage] subscription preferences update failed:', err);
-		return null;
+		return { kind: isInvalidTokenError(err) ? 'invalidToken' : 'error' };
 	}
 }

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -18,6 +19,7 @@ import {
 	Rss,
 	XCircle,
 	Settings,
+	KeyRound,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Toggle } from '@autional-cn/ui';
@@ -32,10 +34,10 @@ const tokenSchema = z.object({
 });
 type TokenForm = z.infer<typeof tokenSchema>;
 
-const prefEmailSchema = z.object({
-	prefEmail: z.string().email(),
+const prefTokenSchema = z.object({
+	prefToken: z.string().min(1),
 });
-type PrefEmailForm = z.infer<typeof prefEmailSchema>;
+type PrefTokenForm = z.infer<typeof prefTokenSchema>;
 
 type SubscribeMode = 'subscribe' | 'unsubscribe' | 'preferences';
 
@@ -60,15 +62,22 @@ export default function SubscribePage() {
 		defaultValues: { token: '' },
 	});
 
-	const prefForm = useForm<PrefEmailForm>({
-		resolver: zodResolver(prefEmailSchema),
-		defaultValues: { prefEmail: '' },
+	const prefForm = useForm<PrefTokenForm>({
+		resolver: zodResolver(prefTokenSchema),
+		defaultValues: { prefToken: '' },
 	});
 
 	// Preferences state
 	const [prefsLoading, setPrefsLoading] = useState(false);
 	const [prefsLoaded, setPrefsLoaded] = useState(false);
 	const [prefs, setPrefs] = useState<SubscriptionPreferences | null>(null);
+	const [prefsToken, setPrefsToken] = useState('');
+
+	// 邮件内「管理偏好」链接入口：/subscribe/manage?token=…（或 /subscribe?token=…）。
+	// 有令牌时自动切到偏好页并加载；只触发只读 GET，不做任何写操作（邮件客户端预取无害）。
+	const [searchParams] = useSearchParams();
+	const queryToken = searchParams.get('token') ?? '';
+	const autoLoadedRef = useRef(false);
 
 	const handleSubscribe = async (data: EmailForm) => {
 		if (loading) return;
@@ -108,52 +117,91 @@ export default function SubscribePage() {
 		}
 	};
 
-	const handleLoadPreferences = async () => {
-		const email = prefForm.getValues('prefEmail');
-		if (!email.trim() || prefsLoading) return;
+	const loadPreferences = async (token: string) => {
+		if (prefsLoading) return;
 
 		setPrefsLoading(true);
 		setPrefsLoaded(false);
 		try {
-			const data = await fetchSubscriptionPreferences(email);
-			if (data) {
-				setPrefs(data);
+			const res = await fetchSubscriptionPreferences(token);
+			if (res.kind === 'ok') {
+				setPrefs(res.prefs);
+				setPrefsToken(token);
 				setPrefsLoaded(true);
+			} else if (res.kind === 'invalidToken') {
+				setResult({ success: false, message: t('subscribe.preferences.invalidToken') });
 			} else {
-				setResult({ success: false, message: t('subscribe.preferences.saveError') });
+				setResult({ success: false, message: t('subscribe.preferences.loadError') });
 			}
-		} catch {
-			setResult({ success: false, message: t('subscribe.preferences.saveError') });
 		} finally {
 			setPrefsLoading(false);
 		}
 	};
 
+	const handleLoadPreferences = () => {
+		if (prefsLoading) return;
+		const token = prefForm.getValues('prefToken').trim();
+		if (!token) return;
+		void loadPreferences(token);
+	};
+
 	const handleSavePreferences = async () => {
-		const email = prefForm.getValues('prefEmail');
-		if (!email.trim() || prefsLoading || !prefs) return;
+		if (!prefs || !prefsToken || prefsLoading) return;
 
 		setPrefsLoading(true);
 		try {
-			const updated = await updateSubscriptionPreferences(email, {
+			const res = await updateSubscriptionPreferences(prefsToken, {
 				notifyIncidents: prefs.notifyIncidents,
 				notifyMaintenance: prefs.notifyMaintenance,
 				notifyRecovery: prefs.notifyRecovery,
 				digestFrequency: prefs.digestFrequency,
 				categories: prefs.categories,
 			});
-			if (updated) {
-				setPrefs(updated);
+			if (res.kind === 'ok') {
+				setPrefs(res.prefs);
 				setResult({ success: true, message: t('subscribe.preferences.saveSuccess') });
+			} else if (res.kind === 'invalidToken') {
+				setResult({ success: false, message: t('subscribe.preferences.invalidToken') });
 			} else {
 				setResult({ success: false, message: t('subscribe.preferences.saveError') });
 			}
-		} catch {
-			setResult({ success: false, message: t('subscribe.preferences.saveError') });
 		} finally {
 			setPrefsLoading(false);
 		}
 	};
+
+	// 管理页显式退订：仅在用户点击时执行（链接本身是 GET，不做自动退订以免预取误触）
+	const handleUnsubscribeFromPrefs = async () => {
+		if (!prefsToken || loading) return;
+
+		setLoading(true);
+		setResult(null);
+		try {
+			const res = await unsubscribeEmail(prefsToken);
+			if (res.success) {
+				setPrefs(null);
+				setPrefsLoaded(false);
+				setPrefsToken('');
+				prefForm.reset();
+			}
+			setResult({
+				success: res.success,
+				message: res.message ?? t(res.code || 'subscribe.unsubscribeError'),
+			});
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	// 落地即加载（仅当 URL 携带管理令牌）：切到偏好 tab、回填令牌、只读拉取
+	useEffect(() => {
+		if (!queryToken || autoLoadedRef.current) return;
+		autoLoadedRef.current = true;
+		prefForm.setValue('prefToken', queryToken);
+		setMode('preferences');
+		void loadPreferences(queryToken);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [queryToken]);
 
 	const handleTogglePref = (key: 'notifyIncidents' | 'notifyMaintenance' | 'notifyRecovery') => {
 		if (!prefs) return;
@@ -328,36 +376,36 @@ export default function SubscribePage() {
 							{t('subscribe.preferences.desc')}
 						</p>
 
-						{/* Email */}
+						{/* Management token（U349：偏好以令牌为键，不再凭邮箱读取） */}
 						<div>
 							<label
-								htmlFor="pref-email"
+								htmlFor="pref-token"
 								className="mb-1.5 block text-sm font-medium text-neutral-700 dark:text-neutral-200"
 							>
-								{t('subscribe.emailLabel')}
+								{t('subscribe.preferences.tokenLabel')}
 							</label>
 							<div className="flex gap-2">
 								<div className="relative flex-1">
-									<Mail
+									<KeyRound
 										size={16}
 										className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"
 									/>
 									<input
-										id="pref-email"
-										type="email"
-										{...prefForm.register('prefEmail')}
+										id="pref-token"
+										type="text"
+										{...prefForm.register('prefToken')}
 										onChange={(e) => {
-											prefForm.register('prefEmail').onChange(e);
+											prefForm.register('prefToken').onChange(e);
 											setPrefsLoaded(false);
 										}}
-										placeholder="your@email.com"
+										placeholder={t('subscribe.preferences.tokenPlaceholder')}
 										className="w-full rounded-md border border-neutral-300 bg-white py-2.5 pl-9 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-100 dark:placeholder:text-neutral-500"
 									/>
 								</div>
 								<button
 									type="button"
 									onClick={prefForm.handleSubmit(() => handleLoadPreferences())}
-									disabled={prefsLoading || !prefForm.getValues('prefEmail').trim()}
+									disabled={prefsLoading || !prefForm.getValues('prefToken').trim()}
 									className="flex items-center gap-1.5 rounded-md bg-neutral-100 px-4 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-200 transition-colors disabled:opacity-50 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600"
 								>
 									{prefsLoading ? (
@@ -368,6 +416,14 @@ export default function SubscribePage() {
 									{t('subscribe.preferences.load')}
 								</button>
 							</div>
+							{prefForm.formState.errors.prefToken && (
+								<p className="mt-1 text-xs text-rose-500">
+									{t('subscribe.preferences.tokenRequired')}
+								</p>
+							)}
+							<p className="mt-1.5 text-xs text-neutral-500 dark:text-neutral-400">
+								{t('subscribe.preferences.tokenHint')}
+							</p>
 						</div>
 
 						{/* Not verified warning */}
@@ -469,6 +525,28 @@ export default function SubscribePage() {
 									<>
 										<Settings size={16} />
 										{t('subscribe.preferences.save')}
+									</>
+								)}
+							</button>
+						)}
+
+						{/* 显式退订（管理链接入口的收尾动作；仅点击时执行） */}
+						{prefsLoaded && prefs && (
+							<button
+								type="button"
+								onClick={handleUnsubscribeFromPrefs}
+								disabled={loading}
+								className="flex w-full items-center justify-center gap-2 rounded-md border border-rose-300 px-4 py-2.5 text-sm font-medium text-rose-600 transition-colors hover:bg-rose-50 disabled:opacity-60 disabled:cursor-not-allowed dark:border-rose-800 dark:text-rose-400 dark:hover:bg-rose-900/20"
+							>
+								{loading ? (
+									<>
+										<Loader2 size={16} className="animate-spin" />
+										{t('subscribe.processing')}
+									</>
+								) : (
+									<>
+										<XCircle size={16} />
+										{t('subscribe.preferences.unsubscribeAction')}
 									</>
 								)}
 							</button>
