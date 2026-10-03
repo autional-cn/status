@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router';
 import StatusHeader from './StatusHeader';
 import Footer from './Footer';
-import { useSystemStatus, useOverview } from '@/hooks/useSystemStatus';
+import { useSystemStatus, useOverview } from '@/hooks/use-system-status';
 import { normalizeOverallStatus } from '@/lib/api';
 
 export default function StatusLayout() {

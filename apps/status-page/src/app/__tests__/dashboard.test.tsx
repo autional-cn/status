@@ -58,7 +58,7 @@ const mockIncidents = [
 	},
 ];
 
-vi.mock('@/hooks/useSystemStatus', () => ({
+vi.mock('@/hooks/use-system-status', () => ({
 	useServiceStatuses: vi.fn(),
 	useIncidents: vi.fn(),
 	useOverview: vi.fn(),
@@ -101,7 +101,7 @@ import {
 	useOverview,
 	useServiceCatalog,
 	useMaintenances,
-} from '@/hooks/useSystemStatus';
+} from '@/hooks/use-system-status';
 
 function renderDashboard() {
 	return render(

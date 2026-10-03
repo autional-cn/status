@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 import { Activity, Bell, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import RefreshCountdown from './RefreshCountdown';
-import { useSystemStatus } from '@/hooks/useSystemStatus';
+import { useSystemStatus } from '@/hooks/use-system-status';
 import { LanguageSwitcher, ThemeToggle } from '@autional-cn/ui';
 import { useTranslation } from 'react-i18next';
 

@@ -18,7 +18,7 @@ vi.mock('react-i18next', async () => {
 	};
 });
 
-vi.mock('@/hooks/useSystemStatus', () => ({
+vi.mock('@/hooks/use-system-status', () => ({
 	useSystemStatus: vi.fn(),
 	useOverview: vi.fn(),
 }));
@@ -32,7 +32,7 @@ vi.mock('@/components/RefreshCountdown', () => ({
 	default: () => <span data-testid="refresh-countdown">30s</span>,
 }));
 
-import { useSystemStatus, useOverview } from '@/hooks/useSystemStatus';
+import { useSystemStatus, useOverview } from '@/hooks/use-system-status';
 
 function mockSources(ready: unknown, overview: unknown) {
 	vi.mocked(useSystemStatus).mockReturnValue({ data: ready } as any);

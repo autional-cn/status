@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router';
-import { useMaintenance } from '@/hooks/useSystemStatus';
+import { useMaintenance } from '@/hooks/use-system-status';
 import {
 	ArrowLeft,
 	Wrench,

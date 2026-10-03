@@ -5,7 +5,7 @@ import {
 	useOverview,
 	useServiceCatalog,
 	useMaintenances,
-} from '@/hooks/useSystemStatus';
+} from '@/hooks/use-system-status';
 import ServiceGroup from '@/components/ServiceGroup';
 import IncidentTimeline from '@/components/IncidentTimeline';
 import StatusIndicator from '@/components/StatusIndicator';

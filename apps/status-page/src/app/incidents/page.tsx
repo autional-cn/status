@@ -1,4 +1,4 @@
-import { useIncidents } from '@/hooks/useSystemStatus';
+import { useIncidents } from '@/hooks/use-system-status';
 import IncidentTimeline from '@/components/IncidentTimeline';
 import { AlertTriangle, Filter } from 'lucide-react';
 import { useTranslation } from 'react-i18next';

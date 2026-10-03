@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { useMaintenances } from '@/hooks/useSystemStatus';
+import { useMaintenances } from '@/hooks/use-system-status';
 import {
 	Calendar,
 	Clock,

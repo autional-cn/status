@@ -4,7 +4,7 @@
  * 2. 客户端回退 (generateRSS): 当服务端不可达时，在浏览器中从 incidents + maintenances 数据生成 XML
  *    此回退保证即便后端 RSS 端点故障，用户仍能获得有效 feed
  */
-import { useRssXml, useIncidents, useMaintenances } from '@/hooks/useSystemStatus';
+import { useRssXml, useIncidents, useMaintenances } from '@/hooks/use-system-status';
 import { Loader2, AlertTriangle, Rss } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '@/components/ErrorBoundary';

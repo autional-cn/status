@@ -4,7 +4,7 @@ import {
 	useIncidents,
 	useLatencyMetrics,
 	useUptimeMetrics,
-} from '@/hooks/useSystemStatus';
+} from '@/hooks/use-system-status';
 import StatusIndicator from '@/components/StatusIndicator';
 import { UptimeChart } from '@/components/UptimeChart';
 import LatencyChart from '@/components/LatencyChart';

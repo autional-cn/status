@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router';
-import { useIncident } from '@/hooks/useSystemStatus';
+import { useIncident } from '@/hooks/use-system-status';
 import { StatusBadge } from '@/components/StatusIndicator';
 import {
 	ArrowLeft,

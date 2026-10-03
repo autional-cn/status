@@ -16,7 +16,7 @@ vi.mock('react-i18next', async () => {
 	};
 });
 
-vi.mock('@/hooks/useSystemStatus', () => ({
+vi.mock('@/hooks/use-system-status', () => ({
 	useIncidents: vi.fn(),
 }));
 
@@ -26,7 +26,7 @@ vi.mock('@/components/IncidentTimeline', () => ({
 	),
 }));
 
-import { useIncidents } from '@/hooks/useSystemStatus';
+import { useIncidents } from '@/hooks/use-system-status';
 
 const mockIncidents = [
 	{
