@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { Activity, Bell, Menu, X } from 'lucide-react';
 import { useState } from 'react';
-import { LanguageSwitcher, ThemeToggle } from '@autional-cn/ui';
+import { LanguageSwitcher, ThemeToggle } from '@autional/ui';
 import { useTranslation } from 'react-i18next';
 
 interface StatusHeaderProps {

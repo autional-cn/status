@@ -9,7 +9,7 @@ import type {
 	ServiceCatalogResponse,
 	ServiceCatalogItem,
 } from '@/types';
-import * as Generated from '@autional-cn/shared/generated/api';
+import * as Generated from '@autional/shared/generated/api';
 
 const isDev = import.meta.env.DEV;
 const devWarn = (...args: unknown[]) => {
@@ -260,7 +260,7 @@ export async function fetchServiceCatalog(): Promise<ServiceCatalogResponse | nu
 
 export async function fetchRssXml(): Promise<string | null> {
 	try {
-		const { apiClient } = await import('@autional-cn/shared');
+		const { apiClient } = await import('@autional/shared');
 		// @generated-api-exempt: RSS endpoint needs Accept: application/rss+xml header
 		const res = await apiClient.get('/status/api/v1/status/rss', {
 			headers: { Accept: 'application/rss+xml' },
@@ -342,7 +342,7 @@ export async function fetchSubscriptionPreferences(
 	token: string,
 ): Promise<SubscriptionPreferencesResult> {
 	try {
-		const { apiClient } = await import('@autional-cn/shared');
+		const { apiClient } = await import('@autional/shared');
 		// @generated-api-exempt: token-keyed preferences (generated shape is email-based)
 		const res = await apiClient.get('/status/api/v1/status/subscriptions/preferences', {
 			params: { token },
@@ -364,7 +364,7 @@ export async function updateSubscriptionPreferences(
 	>,
 ): Promise<SubscriptionPreferencesResult> {
 	try {
-		const { apiClient } = await import('@autional-cn/shared');
+		const { apiClient } = await import('@autional/shared');
 		// @generated-api-exempt: token-keyed preferences (generated shape is email-based)
 		const res = await apiClient.put('/status/api/v1/status/subscriptions/preferences', {
 			token,
