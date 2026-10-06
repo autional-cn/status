@@ -11,6 +11,7 @@ const statusI18nKeys: Record<string, string> = {
 	healthy: 'status.operational',
 	degraded: 'status.degraded',
 	unhealthy: 'status.down',
+	unknown: 'status.unknown',
 	critical: 'severity.critical',
 	major: 'severity.major',
 	minor: 'severity.minor',
@@ -26,6 +27,7 @@ const statusColor: Record<string, string> = {
 	healthy: 'bg-emerald-500',
 	degraded: 'bg-amber-500',
 	unhealthy: 'bg-rose-500',
+	unknown: 'bg-slate-400',
 	critical: 'bg-rose-600',
 	major: 'bg-orange-500',
 	minor: 'bg-amber-400',
@@ -50,6 +52,8 @@ const badgeColors: Record<string, string> = {
 		'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800',
 	unhealthy:
 		'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-900/30 dark:text-rose-400 dark:border-rose-800',
+	unknown:
+		'bg-slate-50 text-slate-600 border-slate-200 dark:bg-slate-800/50 dark:text-slate-400 dark:border-slate-700',
 	critical:
 		'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-900/30 dark:text-rose-400 dark:border-rose-800',
 	major:
@@ -95,7 +99,7 @@ export default function StatusIndicator({
 				}`}
 			/>
 			{showLabel && (
-				<span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">{label}</span>
+				<span className="text-sm font-medium text-neutral-700">{label}</span>
 			)}
 		</div>
 	);

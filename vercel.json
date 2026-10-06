@@ -22,6 +22,14 @@
       "destination": "https://api.autional.cn/tenant/:path*"
     },
     {
+      "source": "/ready",
+      "destination": "https://api.autional.cn/ready"
+    },
+    {
+      "source": "/feed.xml",
+      "destination": "https://api.autional.cn/bff/status/api/v1/status/rss"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

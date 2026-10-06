@@ -16,9 +16,9 @@
 import { registerNonTenantSegments } from '@autional-cn/shared';
 
 export const NON_TENANT_SEGMENTS = [
-	'feed.xml',
 	'incidents',
 	'maintenance',
+	'rss',
 	'services',
 	'subscribe',
 ] as const;

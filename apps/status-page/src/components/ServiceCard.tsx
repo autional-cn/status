@@ -28,24 +28,26 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 			'border-amber-200 hover:border-amber-300 dark:border-amber-800 dark:hover:border-amber-700',
 		unhealthy:
 			'border-rose-200 hover:border-rose-300 dark:border-rose-800 dark:hover:border-rose-700',
+		unknown:
+			'border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600',
 	};
 
 	return (
 		<Link
 			to={`/services/${service.id}`}
-			className={`group flex items-center justify-between rounded-lg border bg-white p-4 shadow-sm transition-all dark:bg-neutral-800 ${
+			className={`group flex items-center justify-between rounded-lg border bg-neutral-0 p-4 shadow-sm transition-all ${
 				statusBorderColors[service.status]
 			} hover:shadow-md`}
 		>
 			<div className="flex items-center gap-3 min-w-0">
-				<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-neutral-100 text-neutral-500 dark:bg-neutral-700 dark:text-neutral-400">
+				<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-neutral-100 text-muted">
 					<Server size={18} />
 				</div>
 				<div className="min-w-0">
-					<h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 truncate">
+					<h3 className="text-sm font-semibold text-neutral-900 truncate">
 						{t('service.name.' + service.id)}
 					</h3>
-					<p className="text-xs text-neutral-500 dark:text-neutral-400 truncate">
+					<p className="text-xs text-muted truncate">
 						{t('service.desc.' + service.id)}
 					</p>
 				</div>
@@ -69,12 +71,13 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 								<div className="h-full w-1/4 rounded bg-rose-500" />
 							</div>
 						)}
+						{service.status === 'unknown' && <div className="h-1 w-full rounded bg-neutral-200" />}
 					</div>
 				)}
 				<div className="flex flex-col items-end gap-1">
 					<StatusIndicator status={service.status} showLabel />
 					{service.latency && (
-						<div className="flex items-center gap-1 text-xs text-neutral-400 dark:text-neutral-500">
+						<div className="flex items-center gap-1 text-xs text-muted">
 							<Clock size={10} />
 							{service.latency}
 						</div>
