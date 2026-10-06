@@ -78,14 +78,14 @@ export default function RefreshCountdown({ intervalMs = 30000, onRefresh }: Refr
 					onRefresh?.();
 					setRemaining(effectiveInterval);
 				}}
-				className="rounded p-1 text-muted hover:bg-neutral-100 hover:text-neutral-600 transition-colors"
+				className="rounded-xs p-1 text-muted hover:bg-neutral-100 hover:text-neutral-600 transition-colors"
 				title={t('refresh')}
 			>
 				<RefreshCw size={12} />
 			</button>
 			<button
 				onClick={() => setPaused((p) => !p)}
-				className="rounded p-1 text-muted hover:bg-neutral-100 hover:text-neutral-600 transition-colors"
+				className="rounded-xs p-1 text-muted hover:bg-neutral-100 hover:text-neutral-600 transition-colors"
 				title={paused ? t('resume') : t('pause')}
 			>
 				{paused ? <Play size={12} /> : <Pause size={12} />}

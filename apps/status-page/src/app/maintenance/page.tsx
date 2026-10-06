@@ -161,7 +161,7 @@ export default function MaintenancePage() {
 											<Link
 												key={m.id}
 												to={`/maintenance/${m.id}`}
-												className="mt-1 hidden truncate rounded px-1 py-0.5 text-[10px] font-medium leading-tight bg-blue-100 text-blue-700 transition-colors hover:bg-blue-200 sm:block dark:bg-blue-900/30 dark:text-blue-300"
+												className="mt-1 hidden truncate rounded-xs px-1 py-0.5 text-[10px] font-medium leading-tight bg-blue-100 text-blue-700 transition-colors hover:bg-blue-200 sm:block dark:bg-blue-900/30 dark:text-blue-300"
 												title={m.title}
 											>
 												{m.title}
@@ -261,7 +261,7 @@ export default function MaintenancePage() {
 											{(m.affectedServices || []).map((sid) => (
 												<span
 													key={sid}
-													className="rounded bg-neutral-100 px-1.5 py-0.5 text-[10px] text-neutral-600"
+													className="rounded-xs bg-neutral-100 px-1.5 py-0.5 text-[10px] text-neutral-600"
 												>
 													{t('service.shortName.' + sid)}
 												</span>

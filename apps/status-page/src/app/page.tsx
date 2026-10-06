@@ -20,9 +20,9 @@ import type { ServiceGroup as ServiceGroupType, ServiceStatus } from '@/types';
 function StatCardSkeleton() {
 	return (
 		<div className="rounded-lg border border-neutral-200 bg-neutral-0 p-5 shadow-sm">
-			<div className="h-3 w-20 animate-pulse rounded bg-neutral-200" />
-			<div className="mt-2 h-8 w-16 animate-pulse rounded bg-neutral-200" />
-			<div className="mt-2 h-3 w-32 animate-pulse rounded bg-neutral-200" />
+			<div className="h-3 w-20 animate-pulse rounded-xs bg-neutral-200" />
+			<div className="mt-2 h-8 w-16 animate-pulse rounded-xs bg-neutral-200" />
+			<div className="mt-2 h-3 w-32 animate-pulse rounded-xs bg-neutral-200" />
 		</div>
 	);
 }

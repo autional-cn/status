@@ -57,21 +57,21 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 				{isDesktop && (
 					<div className="w-20 h-8 shrink-0 flex items-center justify-center">
 						{service.status === 'healthy' && (
-							<div className="h-1 w-full rounded bg-emerald-200 dark:bg-emerald-800">
-								<div className="h-full w-full rounded bg-emerald-500" />
+							<div className="h-1 w-full rounded-xs bg-emerald-200 dark:bg-emerald-800">
+								<div className="h-full w-full rounded-xs bg-emerald-500" />
 							</div>
 						)}
 						{service.status === 'degraded' && (
-							<div className="h-1 w-full rounded bg-amber-200 dark:bg-amber-800">
-								<div className="h-full w-3/4 rounded bg-amber-500" />
+							<div className="h-1 w-full rounded-xs bg-amber-200 dark:bg-amber-800">
+								<div className="h-full w-3/4 rounded-xs bg-amber-500" />
 							</div>
 						)}
 						{service.status === 'unhealthy' && (
-							<div className="h-1 w-full rounded bg-rose-200 dark:bg-rose-800">
-								<div className="h-full w-1/4 rounded bg-rose-500" />
+							<div className="h-1 w-full rounded-xs bg-rose-200 dark:bg-rose-800">
+								<div className="h-full w-1/4 rounded-xs bg-rose-500" />
 							</div>
 						)}
-						{service.status === 'unknown' && <div className="h-1 w-full rounded bg-neutral-200" />}
+						{service.status === 'unknown' && <div className="h-1 w-full rounded-xs bg-neutral-200" />}
 					</div>
 				)}
 				<div className="flex flex-col items-end gap-1">

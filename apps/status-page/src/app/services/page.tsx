@@ -253,7 +253,7 @@ export default function ServiceDetailPage() {
 				<div className="mt-4 h-64">
 					{uptimeLoading ? (
 						<div className="flex h-full items-center justify-center">
-							<div className="h-4 w-32 animate-pulse rounded bg-neutral-200" />
+							<div className="h-4 w-32 animate-pulse rounded-xs bg-neutral-200" />
 						</div>
 					) : uptimeChartData.length > 0 ? (
 						<UptimeChart data={uptimeChartData || []} tooltipLabel={t('service.uptimeTooltip')} />
@@ -285,7 +285,7 @@ export default function ServiceDetailPage() {
 				<div className="mt-4 h-64">
 					{latencyLoading ? (
 						<div className="flex h-full items-center justify-center">
-							<div className="h-4 w-32 animate-pulse rounded bg-neutral-200" />
+							<div className="h-4 w-32 animate-pulse rounded-xs bg-neutral-200" />
 						</div>
 					) : latencyChartData.length > 0 ? (
 						<LatencyChart data={latencyChartData || []} />
