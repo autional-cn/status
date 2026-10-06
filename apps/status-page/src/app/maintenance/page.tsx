@@ -78,7 +78,7 @@ export default function MaintenancePage() {
 			<div className="grid gap-8 lg:grid-cols-3">
 				{/* Calendar */}
 				<div className="lg:col-span-2">
-					<div className="rounded-xl border border-neutral-200 bg-neutral-0 shadow-sm">
+					<div className="rounded-xl border border-neutral-200 bg-neutral-0 shadow-card">
 						{/* Calendar Header */}
 						<div className="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
 							<h2 className="text-lg font-semibold text-neutral-900">
@@ -181,7 +181,7 @@ export default function MaintenancePage() {
 
 				{/* Upcoming Maintenances List */}
 				<div>
-					<div className="rounded-xl border border-neutral-200 bg-neutral-0 shadow-sm">
+					<div className="rounded-xl border border-neutral-200 bg-neutral-0 shadow-card">
 						<div className="border-b border-neutral-100 px-5 py-4">
 							<h3 className="flex items-center gap-2 text-sm font-semibold text-neutral-900">
 								<Wrench size={16} className="text-blue-500" />

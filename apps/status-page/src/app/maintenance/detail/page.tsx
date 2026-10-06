@@ -165,7 +165,7 @@ export default function MaintenanceDetailPage() {
 			</div>
 
 			{/* Affected Services */}
-			<div className="mt-6 rounded-lg border border-neutral-200 bg-neutral-0 p-5 shadow-sm">
+			<div className="mt-6 rounded-lg border border-neutral-200 bg-neutral-0 p-5 shadow-card">
 				<h2 className="flex items-center gap-2 text-sm font-semibold text-neutral-900">
 					<Server size={16} className="text-muted" />
 					{t('maintenance.affectedServices')}
@@ -185,7 +185,7 @@ export default function MaintenanceDetailPage() {
 			</div>
 
 			{/* Status Timeline */}
-			<div className="mt-6 rounded-lg border border-neutral-200 bg-neutral-0 p-5 shadow-sm">
+			<div className="mt-6 rounded-lg border border-neutral-200 bg-neutral-0 p-5 shadow-card">
 				<h2 className="mb-4 text-sm font-semibold text-neutral-900">
 					{t('maintenance.statusTitle')}
 				</h2>

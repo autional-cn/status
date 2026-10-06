@@ -53,7 +53,7 @@ export default function IncidentTimeline({
 				return (
 					<div
 						key={incident.id}
-						className="rounded-lg border border-neutral-200 bg-neutral-0 shadow-sm transition-all hover:shadow-md"
+						className="rounded-lg border border-neutral-200 bg-neutral-0 shadow-card transition-all hover:shadow-md"
 					>
 						<button
 							onClick={() => setExpandedId(isExpanded ? null : incident.id)}

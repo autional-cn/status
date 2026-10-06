@@ -38,14 +38,14 @@ export default function NotFoundPage() {
 			<div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
 				<Link
 					to="/"
-					className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary-700"
+					className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-5 py-2.5 text-sm font-medium text-white shadow-card transition-colors hover:bg-primary-700"
 				>
 					<Home className="h-4 w-4" />
 					{t('notFound.goHome')}
 				</Link>
 				<button
 					onClick={() => window.history.back()}
-					className="inline-flex items-center gap-2 rounded-md border border-neutral-300 bg-neutral-0 px-5 py-2.5 text-sm font-medium text-neutral-700 shadow-sm transition-colors hover:bg-neutral-50"
+					className="inline-flex items-center gap-2 rounded-md border border-neutral-300 bg-neutral-0 px-5 py-2.5 text-sm font-medium text-neutral-700 shadow-card transition-colors hover:bg-neutral-50"
 				>
 					<ArrowLeft className="h-4 w-4" />
 					{t('notFound.goBack')}

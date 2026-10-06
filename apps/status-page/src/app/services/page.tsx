@@ -237,7 +237,7 @@ export default function ServiceDetailPage() {
 			</div>
 
 			{/* Uptime Chart */}
-			<div className="mt-6 rounded-lg border border-neutral-200 bg-neutral-0 p-6 shadow-sm">
+			<div className="mt-6 rounded-lg border border-neutral-200 bg-neutral-0 p-6 shadow-card">
 				<div className="flex items-center justify-between">
 					<h2 className="text-lg font-bold text-neutral-900">
 						{t('service.uptimeTitle', { range })}
@@ -268,7 +268,7 @@ export default function ServiceDetailPage() {
 			</div>
 
 			{/* Latency Chart */}
-			<div className="mt-6 rounded-lg border border-neutral-200 bg-neutral-0 p-6 shadow-sm">
+			<div className="mt-6 rounded-lg border border-neutral-200 bg-neutral-0 p-6 shadow-card">
 				<div className="flex items-center justify-between">
 					<h2 className="text-lg font-bold text-neutral-900">
 						{t('service.latencyTitle', { range })}

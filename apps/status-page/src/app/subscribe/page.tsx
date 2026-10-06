@@ -294,7 +294,7 @@ export default function SubscribePage() {
 				role="tabpanel"
 				id={`panel-${mode}`}
 				aria-labelledby={`tab-${mode}`}
-				className="mt-6 rounded-lg border border-neutral-200 bg-neutral-0 p-6 shadow-sm"
+				className="mt-6 rounded-lg border border-neutral-200 bg-neutral-0 p-6 shadow-card"
 			>
 				{mode === 'subscribe' ? (
 					<form onSubmit={emailForm.handleSubmit(handleSubscribe)} className="space-y-4">

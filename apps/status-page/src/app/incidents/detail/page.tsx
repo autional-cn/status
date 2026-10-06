@@ -169,7 +169,7 @@ export default function IncidentDetailPage() {
 			</div>
 
 			{/* Affected Services */}
-			<div className="mt-6 rounded-lg border border-neutral-200 bg-neutral-0 p-5 shadow-sm">
+			<div className="mt-6 rounded-lg border border-neutral-200 bg-neutral-0 p-5 shadow-card">
 				<h2 className="flex items-center gap-2 text-sm font-semibold text-neutral-900">
 					<Server size={16} className="text-muted" />
 					{t('incidents.affectedServices')}
@@ -212,7 +212,7 @@ export default function IncidentDetailPage() {
 											: 'border-neutral-300 bg-neutral-0'
 									}`}
 								/>
-								<div className="rounded-lg border border-neutral-200 bg-neutral-0 p-4 shadow-sm">
+								<div className="rounded-lg border border-neutral-200 bg-neutral-0 p-4 shadow-card">
 									<div className="flex flex-wrap items-center justify-between gap-2">
 										<div className="flex items-center gap-2">
 											<StatusBadge status={update.status} />

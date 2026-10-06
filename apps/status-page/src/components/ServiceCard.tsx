@@ -35,7 +35,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 	return (
 		<Link
 			to={`/services/${service.id}`}
-			className={`group flex items-center justify-between rounded-lg border bg-neutral-0 p-4 shadow-sm transition-all ${
+			className={`group flex items-center justify-between rounded-lg border bg-neutral-0 p-4 shadow-card transition-all ${
 				statusBorderColors[service.status]
 			} hover:shadow-md`}
 		>

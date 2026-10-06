@@ -53,7 +53,7 @@ export default function ServiceGroup({
 				className={`flex w-full items-center justify-between px-5 py-4 text-left transition-colors ${statusBgColors[status]} hover:opacity-90`}
 			>
 				<div className="flex items-center gap-3">
-					<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-neutral-0 shadow-sm">
+					<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-neutral-0 shadow-card">
 						<Folder size={18} className="text-muted" />
 					</div>
 					<div>
