@@ -13,7 +13,7 @@ export default function NotFoundPage() {
 	const { t } = useTranslation();
 
 	return (
-		<div className="mx-auto max-w-2xl px-4 py-24 text-center">
+		<div className="mx-auto max-w-2xl px-4 py-20 text-center">
 			<div className="text-9xl font-bold text-primary-100 dark:text-primary-100/25">404</div>
 			<h1 className="mt-4 text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
 				{t('notFound.title')}
