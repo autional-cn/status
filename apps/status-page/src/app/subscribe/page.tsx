@@ -22,7 +22,7 @@ import {
 	KeyRound,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Toggle } from '@autional/ui';
+import { Toggle, Input } from '@autional/ui';
 
 const emailSchema = z.object({
 	email: z.string().email(),
@@ -305,19 +305,15 @@ export default function SubscribePage() {
 							>
 								{t('subscribe.emailLabel')}
 							</label>
-							<div className="relative">
-								<Mail
-									size={16}
-									className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
-								/>
-								<input
-									id="email"
-									type="email"
-									{...emailForm.register('email')}
-									placeholder="your@email.com"
-									className="w-full rounded-md border border-neutral-300 bg-neutral-0 py-2.5 pl-9 pr-4 text-sm text-neutral-900 placeholder:text-muted focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
-								/>
-							</div>
+							{/* 图标几何交给设计系统的 Input prefix 槽（第 61 轮）：
+							    原来这里是 absolute 图标 + 算出来的 pl-9（12 起点 + 16 图标 + 8 间隙）。 */}
+							<Input
+								id="email"
+								type="email"
+								{...emailForm.register('email')}
+								placeholder="your@email.com"
+								prefix={<Mail size={16} />}
+							/>
 							{emailForm.formState.errors.email && (
 								<p className="mt-1 text-xs text-rose-500">{t('subscribe.invalidEmail')}</p>
 							)}
@@ -350,19 +346,13 @@ export default function SubscribePage() {
 							>
 								{t('subscribe.tokenLabel')}
 							</label>
-							<div className="relative">
-								<XCircle
-									size={16}
-									className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
-								/>
-								<input
-									id="token"
-									type="text"
-									{...tokenForm.register('token')}
-									placeholder={t('subscribe.tokenPlaceholder')}
-									className="w-full rounded-md border border-neutral-300 bg-neutral-0 py-2.5 pl-9 pr-4 text-sm text-neutral-900 placeholder:text-muted focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
-								/>
-							</div>
+							<Input
+								id="token"
+								type="text"
+								{...tokenForm.register('token')}
+								placeholder={t('subscribe.tokenPlaceholder')}
+								prefix={<XCircle size={16} />}
+							/>
 							{tokenForm.formState.errors.token && (
 								<p className="mt-1 text-xs text-rose-500">{t('subscribe.tokenRequired')}</p>
 							)}
@@ -408,12 +398,8 @@ export default function SubscribePage() {
 								{t('subscribe.preferences.tokenLabel')}
 							</label>
 							<div className="flex gap-2">
-								<div className="relative flex-1">
-									<KeyRound
-										size={16}
-										className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
-									/>
-									<input
+								<div className="flex-1">
+									<Input
 										id="pref-token"
 										type="text"
 										{...prefForm.register('prefToken')}
@@ -422,7 +408,6 @@ export default function SubscribePage() {
 											setPrefsLoaded(false);
 										}}
 										placeholder={t('subscribe.preferences.tokenPlaceholder')}
-										className="w-full rounded-md border border-neutral-300 bg-neutral-0 py-2.5 pl-9 pr-4 text-sm text-neutral-900 placeholder:text-muted focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
 									/>
 								</div>
 								<button
