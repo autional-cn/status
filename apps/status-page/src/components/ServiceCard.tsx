@@ -35,9 +35,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 	return (
 		<Link
 			to={`/services/${service.id}`}
-			className={`group flex items-center justify-between rounded-lg border bg-neutral-0 p-4 shadow-card transition-all ${
-				statusBorderColors[service.status]
-			} hover:shadow-md`}
+			className={`group flex items-center justify-between rounded-lg border bg-neutral-0 p-4 shadow-card transition-all ${ statusBorderColors[service.status] } hover:border-neutral-300`}
 		>
 			<div className="flex items-center gap-3 min-w-0">
 				<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-neutral-100 text-muted">
