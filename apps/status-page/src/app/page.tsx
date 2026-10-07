@@ -115,7 +115,7 @@ export default function DashboardPage() {
 										{servicesHealthy}/{servicesTotal}
 									</p>
 								</div>
-								<div className="flex h-10 w-10 items-center justify-center rounded-md bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">
+								<div className="flex h-10 w-10 items-center justify-center rounded-md bg-success-soft text-success-text dark:bg-success-soft/30 dark:text-success-text">
 									<Shield size={20} />
 								</div>
 							</div>
@@ -138,7 +138,7 @@ export default function DashboardPage() {
 										{activeIncidents}
 									</p>
 								</div>
-								<div className="flex h-10 w-10 items-center justify-center rounded-md bg-rose-50 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400">
+								<div className="flex h-10 w-10 items-center justify-center rounded-md bg-danger-soft text-danger-text dark:bg-danger-soft/30 dark:text-danger-text">
 									<AlertTriangle size={20} />
 								</div>
 							</div>
@@ -157,7 +157,7 @@ export default function DashboardPage() {
 										{plannedMaintenances.length}
 									</p>
 								</div>
-								<div className="flex h-10 w-10 items-center justify-center rounded-md bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+								<div className="flex h-10 w-10 items-center justify-center rounded-md bg-info-soft text-info-text dark:bg-info-soft/30 dark:text-info-text">
 									<Wrench size={20} />
 								</div>
 							</div>

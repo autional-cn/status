@@ -23,16 +23,16 @@ function buildSeverityConfig(
 		critical: {
 			icon: <AlertTriangle size={20} />,
 			label: t('incidents.criticalEvent'),
-			color: 'text-rose-700 dark:text-rose-400',
-			border: 'border-rose-200 dark:border-rose-800',
-			bg: 'bg-rose-50 dark:bg-rose-900/20',
+			color: 'text-danger-text dark:text-danger-text',
+			border: 'border-danger-soft dark:border-danger-soft',
+			bg: 'bg-danger-soft dark:bg-danger-soft/20',
 		},
 		major: {
 			icon: <AlertTriangle size={20} />,
 			label: t('incidents.majorEvent'),
-			color: 'text-orange-700 dark:text-orange-400',
-			border: 'border-orange-200 dark:border-orange-800',
-			bg: 'bg-orange-50 dark:bg-orange-900/20',
+			color: 'text-warning-text dark:text-warning-text',
+			border: 'border-warning-soft dark:border-warning-soft',
+			bg: 'bg-warning-soft dark:bg-warning-soft/20',
 		},
 		minor: {
 			icon: <AlertTriangle size={20} />,
@@ -44,9 +44,9 @@ function buildSeverityConfig(
 		maintenance: {
 			icon: <Wrench size={20} />,
 			label: t('severity.maintenance'),
-			color: 'text-slate-700 dark:text-slate-400',
-			border: 'border-slate-200 dark:border-slate-700',
-			bg: 'bg-slate-50 dark:bg-slate-800/50',
+			color: 'text-[var(--color-text-secondary)] dark:text-[var(--color-text-muted)]',
+			border: 'border-neutral-200 dark:border-neutral-700',
+			bg: 'bg-neutral-50 dark:bg-surface/50',
 		},
 	};
 }
@@ -150,7 +150,7 @@ export default function IncidentDetailPage() {
 						</span>
 					</div>
 					{incident.resolvedAt && (
-						<div className="flex items-center gap-2 text-sm text-emerald-600 dark:text-emerald-400">
+						<div className="flex items-center gap-2 text-sm text-success-text dark:text-success-text">
 							<Clock size={14} />
 							<span>
 								{t('incidents.resolvedLabel')}
@@ -234,17 +234,17 @@ export default function IncidentDetailPage() {
 						{/* Resolved endpoint */}
 						{incident.status === 'resolved' && (
 							<div className="relative">
-								<div className="absolute -left-4 top-1.5 h-3 w-3 rounded-full border-2 border-emerald-500 bg-emerald-500" />
-								<div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-800 dark:bg-emerald-900/20">
+								<div className="absolute -left-4 top-1.5 h-3 w-3 rounded-full border-2 border-success-soft bg-success" />
+								<div className="rounded-lg border border-success-soft bg-success-soft p-4 dark:border-success-soft dark:bg-success-soft/20">
 									<div className="flex items-center gap-2">
 										<StatusBadge status="resolved" />
-										<span className="text-xs text-emerald-600 dark:text-emerald-400">
+										<span className="text-xs text-success-text dark:text-success-text">
 											{incident.resolvedAt
 												? formatDateTime(incident.resolvedAt)
 												: t('incidents.resolvedStatus')}
 										</span>
 									</div>
-									<p className="mt-1 text-sm text-emerald-700 dark:text-emerald-400">
+									<p className="mt-1 text-sm text-success-text dark:text-success-text">
 										{t('incidents.resolvedDesc')}
 									</p>
 								</div>

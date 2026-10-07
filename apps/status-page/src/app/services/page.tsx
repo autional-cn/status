@@ -136,20 +136,20 @@ export default function ServiceDetailPage() {
 
 	const statusConfig = {
 		healthy: {
-			bg: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
-			border: 'border-emerald-200 dark:border-emerald-800',
+			bg: 'bg-success-soft text-success-text dark:bg-success-soft/30 dark:text-success-text',
+			border: 'border-success-soft dark:border-success-soft',
 		},
 		degraded: {
 			bg: 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
 			border: 'border-amber-200 dark:border-amber-800',
 		},
 		unhealthy: {
-			bg: 'bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400',
-			border: 'border-rose-200 dark:border-rose-800',
+			bg: 'bg-danger-soft text-danger-text dark:bg-danger-soft/30 dark:text-danger-text',
+			border: 'border-danger-soft dark:border-danger-soft',
 		},
 		unknown: {
-			bg: 'bg-slate-50 text-slate-700 dark:bg-slate-900/30 dark:text-slate-400',
-			border: 'border-slate-200 dark:border-slate-700',
+			bg: 'bg-neutral-50 text-[var(--color-text-secondary)] dark:bg-surface/30 dark:text-[var(--color-text-muted)]',
+			border: 'border-neutral-200 dark:border-neutral-700',
 		},
 	};
 	const cfg = statusConfig[service.status];
@@ -158,9 +158,9 @@ export default function ServiceDetailPage() {
 		latencyTrend === 'up' ? TrendingUp : latencyTrend === 'down' ? TrendingDown : Minus;
 	const trendColor =
 		latencyTrend === 'up'
-			? 'text-rose-500'
+			? 'text-danger-text'
 			: latencyTrend === 'down'
-				? 'text-emerald-500'
+				? 'text-success-text'
 				: 'text-muted';
 
 	return (
@@ -244,7 +244,7 @@ export default function ServiceDetailPage() {
 					</h2>
 					{avgUptime !== null && (
 						<span
-							className={`flex items-center gap-1 text-sm font-medium ${avgUptime >= 99.9 ? 'text-emerald-600' : avgUptime >= 95 ? 'text-amber-600' : 'text-rose-600'}`}
+							className={`flex items-center gap-1 text-sm font-medium ${avgUptime >= 99.9 ? 'text-success-text' : avgUptime >= 95 ? 'text-amber-600' : 'text-danger-text'}`}
 						>
 							{t('service.uptimeAvg')} {avgUptime}%
 						</span>

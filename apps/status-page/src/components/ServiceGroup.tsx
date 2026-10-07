@@ -32,17 +32,17 @@ export default function ServiceGroup({
 	const healthyCount = services.filter((s) => s.status === 'healthy').length;
 
 	const statusBgColors = {
-		healthy: 'bg-emerald-50/60 dark:bg-emerald-900/10',
+		healthy: 'bg-success-soft/60 dark:bg-success-soft/10',
 		degraded: 'bg-amber-50/60 dark:bg-amber-900/10',
-		unhealthy: 'bg-rose-50/60 dark:bg-rose-900/10',
-		unknown: 'bg-slate-50/60 dark:bg-slate-900/10',
+		unhealthy: 'bg-danger-soft/60 dark:bg-danger-soft/10',
+		unknown: 'bg-neutral-50/60 dark:bg-surface/10',
 	};
 
 	const statusBorderColors = {
-		healthy: 'border-emerald-200 dark:border-emerald-800/50',
+		healthy: 'border-success-soft dark:border-success-soft/50',
 		degraded: 'border-amber-200 dark:border-amber-800/50',
-		unhealthy: 'border-rose-200 dark:border-rose-800/50',
-		unknown: 'border-slate-200 dark:border-slate-700/50',
+		unhealthy: 'border-danger-soft dark:border-danger-soft/50',
+		unknown: 'border-neutral-200 dark:border-neutral-700/50',
 	};
 
 	return (

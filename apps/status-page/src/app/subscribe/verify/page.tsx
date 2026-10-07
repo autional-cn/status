@@ -116,8 +116,8 @@ function VerifyContent() {
 					</>
 				) : result?.success ? (
 					<>
-						<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 dark:bg-emerald-900/30">
-							<CheckCircle size={32} className="text-emerald-600 dark:text-emerald-400" />
+						<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-success-soft dark:bg-success-soft/30">
+							<CheckCircle size={32} className="text-success-text dark:text-success-text" />
 						</div>
 						<h1 className="text-xl font-bold text-neutral-900">
 							{t('verify.success')}
@@ -129,8 +129,8 @@ function VerifyContent() {
 					</>
 				) : (
 					<>
-						<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-rose-50 dark:bg-rose-900/30">
-							<XCircle size={32} className="text-rose-600 dark:text-rose-400" />
+						<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-danger-soft dark:bg-danger-soft/30">
+							<XCircle size={32} className="text-danger-text dark:text-danger-text" />
 						</div>
 						<h1 className="text-xl font-bold text-neutral-900">
 							{t('verify.fail')}

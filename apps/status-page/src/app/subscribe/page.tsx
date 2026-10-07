@@ -315,7 +315,7 @@ export default function SubscribePage() {
 								prefix={<Mail size={16} />}
 							/>
 							{emailForm.formState.errors.email && (
-								<p className="mt-1 text-xs text-rose-500">{t('subscribe.invalidEmail')}</p>
+								<p className="mt-1 text-xs text-danger-text">{t('subscribe.invalidEmail')}</p>
 							)}
 						</div>
 
@@ -354,7 +354,7 @@ export default function SubscribePage() {
 								prefix={<XCircle size={16} />}
 							/>
 							{tokenForm.formState.errors.token && (
-								<p className="mt-1 text-xs text-rose-500">{t('subscribe.tokenRequired')}</p>
+								<p className="mt-1 text-xs text-danger-text">{t('subscribe.tokenRequired')}</p>
 							)}
 							<p className="mt-1.5 text-xs text-muted">
 								{t('subscribe.tokenHint')}
@@ -425,7 +425,7 @@ export default function SubscribePage() {
 								</button>
 							</div>
 							{prefForm.formState.errors.prefToken && (
-								<p className="mt-1 text-xs text-rose-500">
+								<p className="mt-1 text-xs text-danger-text">
 									{t('subscribe.preferences.tokenRequired')}
 								</p>
 							)}
@@ -544,7 +544,7 @@ export default function SubscribePage() {
 								type="button"
 								onClick={handleUnsubscribeFromPrefs}
 								disabled={loading}
-								className="flex w-full items-center justify-center gap-2 rounded-md border border-rose-300 px-4 py-2.5 text-sm font-medium text-rose-600 transition-colors hover:bg-rose-50 disabled:opacity-60 disabled:cursor-not-allowed dark:border-rose-800 dark:text-rose-400 dark:hover:bg-rose-900/20"
+								className="flex w-full items-center justify-center gap-2 rounded-md border border-danger-soft px-4 py-2.5 text-sm font-medium text-danger-text transition-colors hover:bg-danger-soft disabled:opacity-60 disabled:cursor-not-allowed dark:border-danger-soft dark:text-danger-text dark:hover:bg-danger-soft/20"
 							>
 								{loading ? (
 									<>
@@ -566,8 +566,8 @@ export default function SubscribePage() {
 					<div
 						className={`mt-4 flex items-center gap-2 rounded-md p-3 text-sm ${
 							result.success
-								? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
-								: 'bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400'
+								? 'bg-success-soft text-success-text dark:bg-success-soft/30 dark:text-success-text'
+								: 'bg-danger-soft text-danger-text dark:bg-danger-soft/30 dark:text-danger-text'
 						}`}
 					>
 						{result.success ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
@@ -579,7 +579,7 @@ export default function SubscribePage() {
 			{/* Subscription Benefits */}
 			<div className="mt-8 grid gap-4 sm:grid-cols-3">
 				<div className="rounded-lg border border-neutral-200 bg-neutral-0 p-4 text-center">
-					<div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">
+					<div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-success-soft text-success-text dark:bg-success-soft/30 dark:text-success-text">
 						<Rss size={18} />
 					</div>
 					<h3 className="text-sm font-semibold text-neutral-900">
@@ -590,7 +590,7 @@ export default function SubscribePage() {
 					</p>
 				</div>
 				<div className="rounded-lg border border-neutral-200 bg-neutral-0 p-4 text-center">
-					<div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+					<div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-info-soft text-info-text dark:bg-info-soft/30 dark:text-info-text">
 						<CheckCircle size={18} />
 					</div>
 					<h3 className="text-sm font-semibold text-neutral-900">

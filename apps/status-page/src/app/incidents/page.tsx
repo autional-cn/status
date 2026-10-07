@@ -113,8 +113,8 @@ export default function IncidentsPage() {
 				</div>
 			) : filteredIncidents.length === 0 ? (
 				<div className="rounded-lg border border-neutral-200 bg-neutral-0 p-12 text-center">
-					<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50 dark:bg-emerald-900/30">
-						<AlertTriangle size={20} className="text-emerald-600 dark:text-emerald-400" />
+					<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-success-soft dark:bg-success-soft/30">
+						<AlertTriangle size={20} className="text-success-text dark:text-success-text" />
 					</div>
 					<h3 className="text-sm font-medium text-neutral-900">
 						{t('incidents.empty')}

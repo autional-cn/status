@@ -23,13 +23,13 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 	}, []);
 	const statusBorderColors = {
 		healthy:
-			'border-emerald-200 hover:border-emerald-300 dark:border-emerald-800 dark:hover:border-emerald-700',
+			'border-success-soft hover:border-success-soft dark:border-success-soft dark:hover:border-success-soft',
 		degraded:
 			'border-amber-200 hover:border-amber-300 dark:border-amber-800 dark:hover:border-amber-700',
 		unhealthy:
-			'border-rose-200 hover:border-rose-300 dark:border-rose-800 dark:hover:border-rose-700',
+			'border-danger-soft hover:border-danger-soft dark:border-danger-soft dark:hover:border-danger-soft',
 		unknown:
-			'border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600',
+			'border-neutral-200 hover:border-neutral-300 dark:border-neutral-700 dark:hover:border-neutral-600',
 	};
 
 	return (
@@ -55,8 +55,8 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 				{isDesktop && (
 					<div className="w-20 h-8 shrink-0 flex items-center justify-center">
 						{service.status === 'healthy' && (
-							<div className="h-1 w-full rounded-xs bg-emerald-200 dark:bg-emerald-800">
-								<div className="h-full w-full rounded-xs bg-emerald-500" />
+							<div className="h-1 w-full rounded-xs bg-success-soft dark:bg-success-soft">
+								<div className="h-full w-full rounded-xs bg-success" />
 							</div>
 						)}
 						{service.status === 'degraded' && (
@@ -65,8 +65,8 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 							</div>
 						)}
 						{service.status === 'unhealthy' && (
-							<div className="h-1 w-full rounded-xs bg-rose-200 dark:bg-rose-800">
-								<div className="h-full w-1/4 rounded-xs bg-rose-500" />
+							<div className="h-1 w-full rounded-xs bg-danger-soft dark:bg-danger-soft">
+								<div className="h-full w-1/4 rounded-xs bg-danger" />
 							</div>
 						)}
 						{service.status === 'unknown' && <div className="h-1 w-full rounded-xs bg-neutral-200" />}

@@ -21,7 +21,7 @@ export default function StatusHeader({ overallStatus = 'unknown' }: StatusHeader
 
 	const bannerConfig = {
 		healthy: {
-			bg: 'bg-emerald-600',
+			bg: 'bg-success',
 			icon: <Activity size={20} className="animate-pulse-soft" />,
 		},
 		degraded: {
@@ -29,11 +29,11 @@ export default function StatusHeader({ overallStatus = 'unknown' }: StatusHeader
 			icon: <Activity size={20} className="animate-pulse-soft" />,
 		},
 		unhealthy: {
-			bg: 'bg-rose-600',
+			bg: 'bg-danger',
 			icon: <Activity size={20} className="animate-pulse-soft" />,
 		},
 		unknown: {
-			bg: 'bg-slate-500',
+			bg: 'bg-[var(--color-text-muted)]',
 			icon: <Activity size={20} />,
 		},
 	};

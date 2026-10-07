@@ -20,9 +20,9 @@ const statusConfig: Record<
 	scheduled: {
 		label: 'maintenance.status.scheduled',
 		icon: <Calendar size={16} />,
-		color: 'text-blue-700 dark:text-blue-400',
-		border: 'border-blue-200 dark:border-blue-800',
-		bg: 'bg-blue-50 dark:bg-blue-900/20',
+		color: 'text-info-text dark:text-info-text',
+		border: 'border-info-soft dark:border-info-soft',
+		bg: 'bg-info-soft dark:bg-info-soft/20',
 	},
 	in_progress: {
 		label: 'maintenance.status.inProgress',
@@ -34,9 +34,9 @@ const statusConfig: Record<
 	completed: {
 		label: 'maintenance.status.completed',
 		icon: <CheckCircle2 size={16} />,
-		color: 'text-emerald-700 dark:text-emerald-400',
-		border: 'border-emerald-200 dark:border-emerald-800',
-		bg: 'bg-emerald-50 dark:bg-emerald-900/20',
+		color: 'text-success-text dark:text-success-text',
+		border: 'border-success-soft dark:border-success-soft',
+		bg: 'bg-success-soft dark:bg-success-soft/20',
 	},
 	cancelled: {
 		label: 'maintenance.status.cancelled',
@@ -115,7 +115,7 @@ export default function MaintenanceDetailPage() {
 								{t(cfg.label)}
 							</span>
 							{isUpcoming && (
-								<span className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+								<span className="rounded-full bg-info-soft px-2 py-0.5 text-[10px] font-medium text-info-text dark:bg-info-soft/30 dark:text-info-text">
 									{t('maintenance.upcoming')}
 								</span>
 							)}

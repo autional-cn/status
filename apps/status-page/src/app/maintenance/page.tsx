@@ -155,13 +155,13 @@ export default function MaintenancePage() {
 											>
 												{day}
 											</span>
-											{hasMaintenance && <div className="h-1.5 w-1.5 rounded-full bg-blue-500" />}
+											{hasMaintenance && <div className="h-1.5 w-1.5 rounded-full bg-info" />}
 										</div>
 										{dayMaintenances.slice(0, 2).map((m) => (
 											<Link
 												key={m.id}
 												to={`/maintenance/${m.id}`}
-												className="mt-1 hidden truncate rounded-xs px-1 py-0.5 text-[10px] font-medium leading-tight bg-blue-100 text-blue-700 transition-colors hover:bg-blue-200 sm:block dark:bg-blue-900/30 dark:text-blue-300"
+												className="mt-1 hidden truncate rounded-xs px-1 py-0.5 text-[10px] font-medium leading-tight bg-info-soft text-info-text transition-colors hover:bg-info-soft sm:block dark:bg-info-soft/30 dark:text-info-text"
 												title={m.title}
 											>
 												{m.title}
@@ -184,7 +184,7 @@ export default function MaintenancePage() {
 					<div className="rounded-xl border border-neutral-200 bg-neutral-0 shadow-card">
 						<div className="border-b border-neutral-100 px-5 py-4">
 							<h3 className="flex items-center gap-2 text-sm font-semibold text-neutral-900">
-								<Wrench size={16} className="text-blue-500" />
+								<Wrench size={16} className="text-info-text" />
 								{t('maintenance.records')}
 							</h3>
 						</div>
@@ -200,7 +200,7 @@ export default function MaintenancePage() {
 							</div>
 						) : maintenances?.length === 0 ? (
 							<div className="flex flex-col items-center justify-center p-8 text-center">
-								<CheckCircle2 size={32} className="text-emerald-500" />
+								<CheckCircle2 size={32} className="text-success-text" />
 								<p className="mt-3 text-sm font-medium text-neutral-700">
 									{t('maintenance.noRecords')}
 								</p>
@@ -238,7 +238,7 @@ export default function MaintenancePage() {
 											</div>
 											<div className="shrink-0">
 												{m.status === 'completed' ? (
-													<span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+													<span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-[10px] font-medium text-success-text dark:bg-success-soft/30 dark:text-success-text">
 														<CheckCircle2 size={10} />
 														{t('maintenance.completed')}
 													</span>
@@ -248,7 +248,7 @@ export default function MaintenancePage() {
 														{t('maintenance.cancelled')}
 													</span>
 												) : (
-													<span className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+													<span className="inline-flex items-center gap-1 rounded-full bg-info-soft px-2 py-0.5 text-[10px] font-medium text-info-text dark:bg-info-soft/30 dark:text-info-text">
 														<AlertCircle size={10} />
 														{m.status === 'in_progress'
 															? t('maintenance.inProgress')
@@ -280,11 +280,11 @@ export default function MaintenancePage() {
 						</h4>
 						<div className="space-y-1.5 text-xs text-muted">
 							<div className="flex items-center gap-2">
-								<div className="h-2 w-2 rounded-full bg-blue-500" />
+								<div className="h-2 w-2 rounded-full bg-info" />
 								<span>{t('maintenance.legend.planned')}</span>
 							</div>
 							<div className="flex items-center gap-2">
-								<div className="h-2 w-2 rounded-full bg-emerald-500" />
+								<div className="h-2 w-2 rounded-full bg-success" />
 								<span>{t('maintenance.legend.completed')}</span>
 							</div>
 							<div className="flex items-center gap-2">
