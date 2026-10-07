@@ -25,7 +25,7 @@ export default function StatusHeader({ overallStatus = 'unknown' }: StatusHeader
 			icon: <Activity size={20} className="animate-pulse-soft" />,
 		},
 		degraded: {
-			bg: 'bg-amber-500',
+			bg: 'bg-warning',
 			icon: <Activity size={20} className="animate-pulse-soft" />,
 		},
 		unhealthy: {

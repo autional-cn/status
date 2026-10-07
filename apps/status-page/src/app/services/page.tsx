@@ -140,8 +140,8 @@ export default function ServiceDetailPage() {
 			border: 'border-success-soft dark:border-success-soft',
 		},
 		degraded: {
-			bg: 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
-			border: 'border-amber-200 dark:border-amber-800',
+			bg: 'bg-warning-soft text-warning-text dark:bg-warning/30 dark:text-warning-text',
+			border: 'border-warning-soft dark:border-warning-soft',
 		},
 		unhealthy: {
 			bg: 'bg-danger-soft text-danger-text dark:bg-danger-soft/30 dark:text-danger-text',
@@ -244,7 +244,7 @@ export default function ServiceDetailPage() {
 					</h2>
 					{avgUptime !== null && (
 						<span
-							className={`flex items-center gap-1 text-sm font-medium ${avgUptime >= 99.9 ? 'text-success-text' : avgUptime >= 95 ? 'text-amber-600' : 'text-danger-text'}`}
+							className={`flex items-center gap-1 text-sm font-medium ${avgUptime >= 99.9 ? 'text-success-text' : avgUptime >= 95 ? 'text-warning-text' : 'text-danger-text'}`}
 						>
 							{t('service.uptimeAvg')} {avgUptime}%
 						</span>

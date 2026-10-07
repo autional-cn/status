@@ -27,9 +27,9 @@ const statusConfig: Record<
 	in_progress: {
 		label: 'maintenance.status.inProgress',
 		icon: <Wrench size={16} />,
-		color: 'text-amber-700 dark:text-amber-400',
-		border: 'border-amber-200 dark:border-amber-800',
-		bg: 'bg-amber-50 dark:bg-amber-900/20',
+		color: 'text-warning-text dark:text-warning-text',
+		border: 'border-warning-soft dark:border-warning-soft',
+		bg: 'bg-warning-soft dark:bg-warning/20',
 	},
 	completed: {
 		label: 'maintenance.status.completed',

@@ -16,7 +16,7 @@ interface IncidentTimelineProps {
 const severityIcons: Record<string, React.ReactNode> = {
 	critical: <AlertTriangle size={16} className="text-danger-text" />,
 	major: <AlertTriangle size={16} className="text-warning-text" />,
-	minor: <AlertTriangle size={16} className="text-amber-400" />,
+	minor: <AlertTriangle size={16} className="text-warning-text" />,
 	maintenance: <Wrench size={16} className="text-[var(--color-text-muted)]" />,
 };
 

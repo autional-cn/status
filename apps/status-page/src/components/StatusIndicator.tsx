@@ -25,15 +25,15 @@ const statusI18nKeys: Record<string, string> = {
 
 const statusColor: Record<string, string> = {
 	healthy: 'bg-success',
-	degraded: 'bg-amber-500',
+	degraded: 'bg-warning',
 	unhealthy: 'bg-danger',
 	unknown: 'bg-[var(--color-text-muted)]',
 	critical: 'bg-danger',
 	major: 'bg-warning',
-	minor: 'bg-amber-400',
+	minor: 'bg-warning',
 	maintenance: 'bg-[var(--color-text-muted)]',
 	investigating: 'bg-danger',
-	identified: 'bg-amber-500',
+	identified: 'bg-warning',
 	monitoring: 'bg-info',
 	resolved: 'bg-success',
 	draft: 'bg-[var(--color-text-muted)]',
@@ -49,7 +49,7 @@ const badgeColors: Record<string, string> = {
 	healthy:
 		'bg-success-soft text-success-text border-success-soft dark:bg-success-soft/30 dark:text-success-text dark:border-success-soft',
 	degraded:
-		'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800',
+		'bg-warning-soft text-warning-text border-warning-soft dark:bg-warning/30 dark:text-warning-text dark:border-warning-soft',
 	unhealthy:
 		'bg-danger-soft text-danger-text border-danger-soft dark:bg-danger-soft/30 dark:text-danger-text dark:border-danger-soft',
 	unknown:
@@ -59,13 +59,13 @@ const badgeColors: Record<string, string> = {
 	major:
 		'bg-warning-soft text-warning-text border-warning-soft dark:bg-warning-soft/30 dark:text-warning-text dark:border-warning-soft',
 	minor:
-		'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800',
+		'bg-warning-soft text-warning-text border-warning-soft dark:bg-warning/30 dark:text-warning-text dark:border-warning-soft',
 	maintenance:
 		'bg-neutral-100 text-neutral-600 border-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:border-neutral-700',
 	investigating:
 		'bg-danger-soft text-danger-text border-danger-soft dark:bg-danger-soft/30 dark:text-danger-text dark:border-danger-soft',
 	identified:
-		'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800',
+		'bg-warning-soft text-warning-text border-warning-soft dark:bg-warning/30 dark:text-warning-text dark:border-warning-soft',
 	monitoring:
 		'bg-info-soft text-info-text border-info-soft dark:bg-info-soft/30 dark:text-info-text dark:border-info-soft',
 	resolved:

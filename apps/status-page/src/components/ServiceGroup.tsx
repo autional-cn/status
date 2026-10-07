@@ -33,14 +33,14 @@ export default function ServiceGroup({
 
 	const statusBgColors = {
 		healthy: 'bg-success-soft/60 dark:bg-success-soft/10',
-		degraded: 'bg-amber-50/60 dark:bg-amber-900/10',
+		degraded: 'bg-warning-soft/60 dark:bg-warning/10',
 		unhealthy: 'bg-danger-soft/60 dark:bg-danger-soft/10',
 		unknown: 'bg-neutral-50/60 dark:bg-surface/10',
 	};
 
 	const statusBorderColors = {
 		healthy: 'border-success-soft dark:border-success-soft/50',
-		degraded: 'border-amber-200 dark:border-amber-800/50',
+		degraded: 'border-warning-soft dark:border-warning-soft/50',
 		unhealthy: 'border-danger-soft dark:border-danger-soft/50',
 		unknown: 'border-neutral-200 dark:border-neutral-700/50',
 	};

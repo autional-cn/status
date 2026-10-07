@@ -37,9 +37,9 @@ function buildSeverityConfig(
 		minor: {
 			icon: <AlertTriangle size={20} />,
 			label: t('incidents.minorEvent'),
-			color: 'text-amber-700 dark:text-amber-400',
-			border: 'border-amber-200 dark:border-amber-800',
-			bg: 'bg-amber-50 dark:bg-amber-900/20',
+			color: 'text-warning-text dark:text-warning-text',
+			border: 'border-warning-soft dark:border-warning-soft',
+			bg: 'bg-warning-soft dark:bg-warning/20',
 		},
 		maintenance: {
 			icon: <Wrench size={20} />,

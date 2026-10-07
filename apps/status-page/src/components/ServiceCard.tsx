@@ -25,7 +25,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 		healthy:
 			'border-success-soft hover:border-success-soft dark:border-success-soft dark:hover:border-success-soft',
 		degraded:
-			'border-amber-200 hover:border-amber-300 dark:border-amber-800 dark:hover:border-amber-700',
+			'border-warning-soft hover:border-warning dark:border-warning-soft dark:hover:border-warning',
 		unhealthy:
 			'border-danger-soft hover:border-danger-soft dark:border-danger-soft dark:hover:border-danger-soft',
 		unknown:
