@@ -33,8 +33,8 @@ export default function IncidentTimeline({
 	if (incidents.length === 0) {
 		return (
 			<div className="rounded-lg border border-neutral-200 bg-neutral-0 p-8 text-center">
-				<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-success-soft dark:bg-success-soft/30">
-					<Clock size={20} className="text-success-text dark:text-success-text" />
+				<div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-success-soft/30">
+					<Clock size={20} className="text-success-text" />
 				</div>
 				<h3 className="text-sm font-medium text-neutral-900">
 					{t('incidents.recentNone')}
@@ -140,7 +140,7 @@ export default function IncidentTimeline({
 								)}
 
 								{incident.resolvedAt && (
-									<div className="mt-3 flex items-center gap-2 text-xs text-success-text dark:text-success-text">
+									<div className="mt-3 flex items-center gap-2 text-xs text-success-text">
 										<Clock size={12} />
 										{t('incidents.resolvedAt', { time: formatShortDateTime(incident.resolvedAt) })}
 									</div>

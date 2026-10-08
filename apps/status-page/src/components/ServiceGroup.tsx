@@ -39,9 +39,9 @@ export default function ServiceGroup({
 	};
 
 	const statusBorderColors = {
-		healthy: 'border-success-soft dark:border-success-soft/50',
-		degraded: 'border-warning-soft dark:border-warning-soft/50',
-		unhealthy: 'border-danger-soft dark:border-danger-soft/50',
+		healthy: 'border-success-soft/50',
+		degraded: 'border-warning-soft/50',
+		unhealthy: 'border-danger-soft/50',
 		unknown: 'border-neutral-200 dark:border-neutral-700/50',
 	};
 

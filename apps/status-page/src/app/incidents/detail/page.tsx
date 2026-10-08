@@ -23,22 +23,22 @@ function buildSeverityConfig(
 		critical: {
 			icon: <AlertTriangle size={20} />,
 			label: t('incidents.criticalEvent'),
-			color: 'text-danger-text dark:text-danger-text',
-			border: 'border-danger-soft dark:border-danger-soft',
-			bg: 'bg-danger-soft dark:bg-danger-soft/20',
+			color: 'text-danger-text',
+			border: 'border-danger-soft',
+			bg: 'bg-danger-soft/20',
 		},
 		major: {
 			icon: <AlertTriangle size={20} />,
 			label: t('incidents.majorEvent'),
-			color: 'text-warning-text dark:text-warning-text',
-			border: 'border-warning-soft dark:border-warning-soft',
-			bg: 'bg-warning-soft dark:bg-warning-soft/20',
+			color: 'text-warning-text',
+			border: 'border-warning-soft',
+			bg: 'bg-warning-soft/20',
 		},
 		minor: {
 			icon: <AlertTriangle size={20} />,
 			label: t('incidents.minorEvent'),
-			color: 'text-warning-text dark:text-warning-text',
-			border: 'border-warning-soft dark:border-warning-soft',
+			color: 'text-warning-text',
+			border: 'border-warning-soft',
 			bg: 'bg-warning-soft dark:bg-warning/20',
 		},
 		maintenance: {
@@ -150,7 +150,7 @@ export default function IncidentDetailPage() {
 						</span>
 					</div>
 					{incident.resolvedAt && (
-						<div className="flex items-center gap-2 text-sm text-success-text dark:text-success-text">
+						<div className="flex items-center gap-2 text-sm text-success-text">
 							<Clock size={14} />
 							<span>
 								{t('incidents.resolvedLabel')}
@@ -238,13 +238,13 @@ export default function IncidentDetailPage() {
 								<div className="rounded-lg border border-success-soft bg-success-soft p-4 dark:border-success-soft dark:bg-success-soft/20">
 									<div className="flex items-center gap-2">
 										<StatusBadge status="resolved" />
-										<span className="text-xs text-success-text dark:text-success-text">
+										<span className="text-xs text-success-text">
 											{incident.resolvedAt
 												? formatDateTime(incident.resolvedAt)
 												: t('incidents.resolvedStatus')}
 										</span>
 									</div>
-									<p className="mt-1 text-sm text-success-text dark:text-success-text">
+									<p className="mt-1 text-sm text-success-text">
 										{t('incidents.resolvedDesc')}
 									</p>
 								</div>

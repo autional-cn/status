@@ -137,15 +137,15 @@ export default function ServiceDetailPage() {
 	const statusConfig = {
 		healthy: {
 			bg: 'bg-success-soft text-success-text dark:bg-success-soft/30 dark:text-success-text',
-			border: 'border-success-soft dark:border-success-soft',
+			border: 'border-success-soft',
 		},
 		degraded: {
 			bg: 'bg-warning-soft text-warning-text dark:bg-warning/30 dark:text-warning-text',
-			border: 'border-warning-soft dark:border-warning-soft',
+			border: 'border-warning-soft',
 		},
 		unhealthy: {
 			bg: 'bg-danger-soft text-danger-text dark:bg-danger-soft/30 dark:text-danger-text',
-			border: 'border-danger-soft dark:border-danger-soft',
+			border: 'border-danger-soft',
 		},
 		unknown: {
 			bg: 'bg-neutral-50 text-[var(--color-text-secondary)] dark:bg-surface/30 dark:text-[var(--color-text-muted)]',

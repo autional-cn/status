@@ -55,7 +55,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 				{isDesktop && (
 					<div className="w-20 h-8 shrink-0 flex items-center justify-center">
 						{service.status === 'healthy' && (
-							<div className="h-1 w-full rounded-xs bg-success-soft dark:bg-success-soft">
+							<div className="h-1 w-full rounded-xs bg-success-soft">
 								<div className="h-full w-full rounded-xs bg-success" />
 							</div>
 						)}
@@ -65,7 +65,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 							</div>
 						)}
 						{service.status === 'unhealthy' && (
-							<div className="h-1 w-full rounded-xs bg-danger-soft dark:bg-danger-soft">
+							<div className="h-1 w-full rounded-xs bg-danger-soft">
 								<div className="h-full w-1/4 rounded-xs bg-danger" />
 							</div>
 						)}
